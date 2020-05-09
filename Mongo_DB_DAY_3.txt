@@ -1,0 +1,34 @@
+
+//finding the discontinued and unit price less than 50 products
+db.products.find({$and: [{Discontinued:1},{UnitPrice:{$lt: 50}}]})
+  
+db.regions.find().count()
+ 
+//find the products with  price grater than 100
+db.products.find({UnitPrice :{$gt:100}})
+  
+//providing first 4 elemnts that satisfied the query
+db.products.find().limit(4)
+
+//this will provide the products with unit price >100 or units in stock>50
+db.products.find({$or: [{UnitPrice:{$gt: 100}},{UnitsInStock :{$gt: 50}}]})
+  
+//finding the unit price 50 <x<100
+db.products.find({UnitPrice :{$lt:100,$gt: 50} })
+ 
+db.regions.find().skip(2)
+
+db.regions.find().sort({ RegionID:1 }) 
+
+db.regions.find().sort({ RegionID:1 })
+
+//this will update the phone numbr
+db.getCollection("Shipper-copy").update({},{Phone:"12345678"})
+db.getCollection("Shipper-copy").update({CompanyName:"United Package"},{Phone:"12345678"})
+
+//multiple update at one time
+db.getCollection("Shipper-copy").update({},{$set: {Phone:'xyz-4566'}},{multi:true})
+
+//UPDATE AT ONR TIME 
+db.getCollection("Shipper-copy").updateMany({},{$set: {Phone:'xyz-4566'}})
+  
