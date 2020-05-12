@@ -1,0 +1,92 @@
+//update at one time the whole table
+db.customers_copy.update({},{$push: {PostalCode:100}},{multi:true})
+
+//find the city of the customers
+db.customers.find({},{City :'reims'})
+  
+//FIND THE CITY WITH THE SELECTED POSTAL CODE
+db.customers_copy.find({PostalCode:8200})
+   .projection({})
+   .sort({_id:-1})
+   .limit(100)
+
+------------------------------------------------------
+
+//VALIDATION PUT IN TO THE DATA BASE
+//SO THE VALIDATION IS DONE BEFORE THE INSERATION TO THE DATA BASE
+
+db.getCollection('AmazonSplOfferCustomers').find({})
+
+db.AmazonSplOfferCustomers.insert(
+{
+    amzid :100,
+    total_purchase : 20000,
+    country :'uk'    
+}
+)
+
+db.AmazonSplOfferCustomers.insert(
+{
+    amzid :10,
+    total_purchase : 256740,
+    country :'uk'    
+}
+)
+
+db.AmazonSplOfferCustomers.insert(
+{
+    amzid :1,
+    total_purchase : 200,
+    country :'spain'    
+}
+)
+
+db.AmazonSplOfferCustomers.insert(
+{
+    amzid :45,
+    total_purchase : 80090,
+    country :'japan'    
+}
+)
+
+db.AmazonSplOfferCustomers.insert(
+{
+    amzid :23,
+    total_purchase : 200,
+    country :'india'    
+}
+)
+
+db.AmazonSplOfferCustomers.insert(
+{
+    amzid :659,
+    total_purchase : 20004,
+    country :'us'    
+}
+)
+
+db.AmazonSplOfferCustomers.insert(
+{
+    amzid :34,
+    total_purchase : 24560,
+    country :'brazil'    
+}
+)
+
+db.AmazonSplOfferCustomers.insert(
+{
+    amzid :1672,
+    total_purchase : 2000,
+    country :'sri lanka'    
+}
+)
+
+---------------------------------------------------------------
+
+db.getCollection('employee-territories_copy').getIndexes()
+
+db.getCollection('employee-territories_copy').dropIndexes()
+
+db.getCollection('emplyee-territories_copy').find({$txt :{$serch :"queries"}})
+
+   
