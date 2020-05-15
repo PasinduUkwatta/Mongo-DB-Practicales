@@ -1,0 +1,53 @@
+//js function to create numbers
+for(i = 0;i<100;i++){
+    
+    //insert random numbers
+    db.Collection_JS.insert({randomNumber :Math.floor(Math.random()*100+1)})
+    
+}
+
+//this code will help to find the numbers grater than 50 in the collection
+var filterMax = 50;
+
+db.Collection_JS.find({randomNumber:{$gt:filterMax}})
+
+
+//getting the details about the present databases in the system in javascript
+db.adminCommand('listDatabases')
+
+
+//get the collection name from the javascript
+db.getCollectionNames()
+
+
+
+
+//we are putting the curser to the find function
+cursor_ret = db.getCollection('Collection_JS').find({})
+
+//we are looping thourgh the find method
+while(cursor_ret.hasNext()){
+    
+    //this code will help to print the data into the json file
+    printjson(cursor_ret.next().randomNumber)
+    
+    
+    //this code will insert the collection_js database values into the Test-collection database
+    db.Test_Collection.insert(cursor_ret.next())
+    
+}
+
+//this is a javascript same as procedure in the sql
+db.system.js.save({
+    _id:"sumOfRandom",
+    
+    value :function(){
+        var sum_random =0
+        db=db.getSiblingDB("JS_DEMO_DB")
+        cursor = db.getCollection('Collection_JS').find({})
+        while(cursor.hasNext()){
+            sum_random+=cursor.next().randomNumber
+        }
+        
+        return sum_random;
+
