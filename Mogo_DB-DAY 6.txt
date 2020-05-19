@@ -1,0 +1,72 @@
+//this will cataogarize the seleced data set in to the types that we need   
+db.customers_copy.aggregate({
+    
+    $group: { _id: "$City",totalnumber :{$sum:1}}
+    
+})
+
+
+//this will set to the desending order
+//-1 will set to the desending order
+db.customers_copy.aggregate({
+    
+    $group: { _id: "$City",totalnumber :{$sum:1}}
+    
+},{$sort: {totalnumber:-1}})
+
+
+//in this the limit funtion will limit the results in to the selctrd numbers 
+//only 5 records will be given
+db.customers_copy.aggregate({
+    
+    $group: { _id: "$City",totalnumber :{$sum:1}}
+    
+},{$sort: {totalnumber:-1}},{$limit: 5}
+)
+
+
+//getting the details about the contact person is he owner of the compnay
+db.customers.aggregate(
+    {
+    $match :{ContactTitle:"Owner"},
+})
+
+//using the admin privillges
+use admin
+
+
+//creating te shard in port 30001
+db.runCommand({addshard :"localhost :30001","name":"shard_one_demo"})Modify Chunk Size in a Sharded Cluster
+
+//adding chunksize of 1mb
+db.settings.save( { _id:"chunksize", value: 1 } )
+
+db.runCommand({addshard :"localhost :30002","name":"shard_two_demo"})
+db.settings.save( { _id:"chunksize", value: 1 } )
+
+
+
+db.runCommand({addshard :"localhost :30003","name":"shard_three_demo"})
+db.settings.save( { _id:"chunksize", value: 1 } )
+
+db.getCollection('col_mp').find({})
+
+
+//create a map function
+
+var map_function=function(){
+emit(this.student_id,this.total_marks);
+
+};
+
+//create a reduce function
+
+
+var reduce_function = function(student_id_in,total_marks_in){
+    
+    return Array.sum(total_marks_in)/total_marks_in.lenght;
+    };
+    
+    
+    
+db.col_mp.mapReduce(map_function,reduce_function,{out :'result_map_reduce'})
