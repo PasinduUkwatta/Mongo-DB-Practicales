@@ -1,0 +1,37 @@
+//serching using the reguler expresssions
+//in this we doesnt need to use the double brackets
+//we can use the baclslashes beween the words that we need to serch
+
+db.getCollection('DemoBook').find({"bookname":/Ridiculus Mus /})
+db.getCollection('DemoBook').find({"bookname":/Sodales/})
+
+//WHEN WE USE THE UPPER CASE LETTER THE QUERY WILL NOT WORK
+db.getCollection('DemoBook').find({"bookname":/SODALES/})
+
+//WE NEED TO USE i after the serching words to selcrt from the uppercase
+db.getCollection('DemoBook').find({"bookname":/SODALES/i})
+
+
+//we can  use this way when we are using the regex for the serch
+db.getCollection('DemoBook').find({"bookname":{$regex:/SODALES/,$options:"i"}})
+
+//we can  replac the backslash with the sinle quates in the serching word
+//it diidnt give any error to us
+db.getCollection('DemoBook').find({"bookname":{$regex:'SODALES',$options:"i"}})
+
+//this is a or operator
+//so this will consider the both operations
+db.getCollection('DemoBook').find({"bookname":{$regex:'SODALES|llc',$options:"i"}})
+
+//WE CAN  SERCH FOR THE RANGE BY GIVINIG IN THE SQURE BRACKERTS
+db.getCollection('DemoBook').find({"bookname":{$regex:'[S-U]',$options:"i"}})
+
+//WE CAN  ALSO LOOK FOR THE NUMBERS
+db.getCollection('DemoBook').find({"bookname":{$regex:'[0-9]',$options:"i"}})
+
+
+
+
+
+
+
