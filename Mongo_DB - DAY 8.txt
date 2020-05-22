@@ -1,0 +1,108 @@
+db.orders.find({})
+
+//this will serch in thr index of the collection
+//default only the id has the index
+//so the get index method will show only the id field as the index field
+db.orders.getIndexes()
+
+//THS METHOD WILL PROVIDE THE PERFORMANCE OF THE QUERY
+//IN THIS QUERY MONGO DB SERCHED FOR THE WHOLE DOUCUMENT
+//SO THIS IS NOT A GOOD WAY
+db.orders.find({CustomerID:'VINET'}).explain("executionStats")
+
+//THIS WILL CREATE A INDEX ON CUSTOMER ID 
+db.orders.createIndex({CustomerID :1})
+
+//THIS TIME MONGO DB WILL ONLY SERCH FOR 5 DOCUMNETS 
+//SO THE CRETE INDEX WILL HELP TO INCERASE THE SPEED OF THE SERCH QUERY
+db.orders.find({CustomerID:'VINET'}).explain("executionStats")
+
+db.Test_Id_Index.insert([{name:'testman'}])
+ 
+db.Test_Id_Index.getIndexes()
+
+//this will create additional index for the collection
+db.Test_Id_Index.createIndex({name:1})
+
+//this will drop the selcted index
+db.Test_Id_Index.dropIndex({name:1})
+
+//creating mongodump for selected databases
+mongodump --db Regex_DB --collection DemoBook --out c:/Desktop
+
+//this will help to see the data in the selected bson file
+bsondump c:\Desktop\DemoBook.bson
+
+
+
+db.createCollection("reguler")
+
+//create the capped collection
+//we need to specify the capped :true
+//size 1024 and maximun doucuments amounts
+db.createCollection("capped",{"capped":true,size :1024,max:5})
+
+//in the capped collection we try to insert 100 data 
+//but only inserted the 5 data only due to the max amount we have given
+//fifo is using
+//so the last 5 data inserted is only saved 
+//other will replace by them
+for(i=0;i<100;i++){
+
+db.capped.insert({"name":"x"+i,"age":i+10})
+}
+
+
+//insert data into the reguler data base
+for(i=0;i<100;i++){
+
+db.reguler.insert({"name":"x"+i,"age":i+10})
+}
+
+//we can perform delte on capped database
+//but the data isnt delete from the data Base
+db.capped.deleteOne({name:"x95"})
+
+//after the deletion is done then also we can seen the data is one the dtabse
+//beacuse capped database data cannot be deleted
+db.capped.find({name:"x95"})
+
+
+//this will create index for 100 seconds
+//but after the 100 sec data index will be expired
+db.Node_js_DB.createIndex({"id":1},{expireAfterSeconds :100})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
